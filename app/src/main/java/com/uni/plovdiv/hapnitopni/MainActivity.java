@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.LauncherActivityInfo;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.opengl.GLDebugHelper;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
@@ -42,11 +45,13 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         myDbHandler = new MyDBHandler(this, null,null, 1);
+
 
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
@@ -77,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
         //here i initialize the optionMenu button- exit
         exitButton = findViewById(R.id.exitButton);
+
 
 
         //and set to go from one activity to start

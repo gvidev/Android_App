@@ -51,6 +51,7 @@ public class LoginActivity extends AppCompatActivity {
                 String email = emailET.getText().toString();
                 String password = passwordET.getText().toString();
 
+
                 Users user  = new Users(email,password);
 
                 if(email.equals("")||password.equals("")){
@@ -59,6 +60,7 @@ public class LoginActivity extends AppCompatActivity {
                     Boolean checkLoginParametersExist = myDbHandler.checkLoginParametersExist(user);
                     if(checkLoginParametersExist == true){
                         Toast.makeText(LoginActivity.this, "Успешно се логнахте!", Toast.LENGTH_SHORT).show();
+                        myDbHandler.changeStatus(user);
                         startActivity(new Intent(getApplicationContext(), MainActivity.class));
                     }else{
                         Toast.makeText(LoginActivity.this, "Невалидни данни!", Toast.LENGTH_SHORT).show();

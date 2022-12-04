@@ -14,11 +14,14 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "hapniTopni.db";
+
+    //table USER info
     public static final String TABLE_USERS_NAME = "users";
-    public  static final String COLUMN_ID = "id";
-    public  static final String COLUMN_EMAIL = "email";
-    public  static final String COLUMN_PASSWORD = "password";
-    public  static final String COLUMN_NAME = "name";
+    public static final String COLUMN_ID = "id";
+    public static final String COLUMN_EMAIL = "email";
+    public static final String COLUMN_PASSWORD = "password";
+    public static final String COLUMN_NAME = "name";
+    public static final String COLUMN_IS_CURRENT_USER = "isCurrentUser";
 
 
     public MyDBHandler(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
@@ -32,7 +35,8 @@ public class MyDBHandler extends SQLiteOpenHelper {
                 COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_EMAIL + " TEXT ," +
                 COLUMN_PASSWORD + " TEXT ," +
-                COLUMN_NAME + " TEXT " +
+                COLUMN_NAME + " TEXT ," +
+                COLUMN_IS_CURRENT_USER + " TEXT " +
                 ");" ;
         sqLiteDatabase.execSQL(query);
     }
@@ -46,10 +50,12 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
     //add a new row to the table Users
     public Boolean Registration(Users user){
+        String bool = "false";
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME, user.getName());
         values.put(COLUMN_EMAIL, user.getEmail());
         values.put(COLUMN_PASSWORD,user.getPassword());
+        values.put(COLUMN_IS_CURRENT_USER, bool);
         SQLiteDatabase db = getWritableDatabase();
         //db.insert returns type long
         long result = db.insert(TABLE_USERS_NAME, null, values);
@@ -87,6 +93,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery("Select * from users where email = ? and password = ?",
                 new String[] {user.getEmail(),user.getPassword()});
 
+
         if(cursor.getCount()>0) {
             return true;
         }
@@ -95,6 +102,16 @@ public class MyDBHandler extends SQLiteOpenHelper {
         }
 
     }
+
+    public void changeStatus(Users user){
+        String email = user.getEmail();
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = db.rawQuery("update " + TABLE_USERS_NAME
+                + " set isCurrentUser=true where email ='" + email + "'",null);
+
+    }
+
+
 
 
 

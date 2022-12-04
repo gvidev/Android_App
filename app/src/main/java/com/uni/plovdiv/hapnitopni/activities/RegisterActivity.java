@@ -66,7 +66,7 @@ public class RegisterActivity extends AppCompatActivity {
                         Boolean insert =  myDbHandler.Registration(user);
                         if(insert == true){
                             Toast.makeText(RegisterActivity.this, "Успешно се регистрирахте!", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                         }else{
                             Toast.makeText(RegisterActivity.this, "Грешка по време на регистрация!", Toast.LENGTH_SHORT).show();
                         }

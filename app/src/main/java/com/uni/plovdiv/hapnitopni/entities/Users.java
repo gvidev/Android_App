@@ -1,5 +1,7 @@
 package com.uni.plovdiv.hapnitopni.entities;
 
+import android.widget.TextView;
+
 public class Users {
 
     private int id;
@@ -22,6 +24,8 @@ public class Users {
         this.password = password;
         this.name = name;
     }
+
+
 
     public int getId() {
         return id;
