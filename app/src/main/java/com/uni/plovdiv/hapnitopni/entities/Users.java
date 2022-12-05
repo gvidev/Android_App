@@ -1,7 +1,5 @@
 package com.uni.plovdiv.hapnitopni.entities;
 
-import android.widget.TextView;
-
 public class Users {
 
     private int id;
@@ -47,7 +45,7 @@ public class Users {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail() {
         this.email = email;
     }
 

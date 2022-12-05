@@ -23,13 +23,18 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.uni.plovdiv.hapnitopni.Session.SessionManager;
 import com.uni.plovdiv.hapnitopni.activities.LoginActivity;
 import com.uni.plovdiv.hapnitopni.activities.StartActivity;
 import com.uni.plovdiv.hapnitopni.databinding.ActivityMainBinding;
 import com.uni.plovdiv.hapnitopni.entities.Users;
 import com.uni.plovdiv.hapnitopni.repository.MyDBHandler;
 
-import java.lang.reflect.Field;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,11 +43,15 @@ public class MainActivity extends AppCompatActivity {
 
     MyDBHandler myDbHandler;
     Button exitButton;
-    TextView fullNameForHeader;
+    TextView currentDateTV;
     TextView emailForHeader;
 
-    Users user ;
+    String[] dataFromDB;
 
+    String currentDate ;
+    SessionManager session;
+
+    int current_user_id;
 
 
 
@@ -50,7 +59,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        session = new SessionManager(this);
+
         myDbHandler = new MyDBHandler(this, null,null, 1);
+        currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+        current_user_id = session.getSession();
+
+
+        dataFromDB = myDbHandler.getUserById(String.valueOf(current_user_id));
+
+
+
 
 
 
@@ -83,7 +102,11 @@ public class MainActivity extends AppCompatActivity {
         //here i initialize the optionMenu button- exit
         exitButton = findViewById(R.id.exitButton);
 
+        emailForHeader = findViewById(R.id.emailFromCurrentLoginTV);
+        currentDateTV = findViewById(R.id.currentDateFull);
+       currentDateTV.setText(currentDate);
 
+       emailForHeader.setText(dataFromDB[0]);
 
         //and set to go from one activity to start
         //and with that i reset the current state of program

@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.uni.plovdiv.hapnitopni.MainActivity;
 import com.uni.plovdiv.hapnitopni.R;
+import com.uni.plovdiv.hapnitopni.Session.SessionManager;
 import com.uni.plovdiv.hapnitopni.entities.Users;
 import com.uni.plovdiv.hapnitopni.repository.MyDBHandler;
 
@@ -22,6 +23,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText emailET;
     EditText passwordET;
     MyDBHandler myDbHandler;
+    SessionManager session;
 
     Button loginB;
     TextView registerTV;
@@ -36,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
         myDbHandler = new MyDBHandler(this, null, null,1);
         loginB = findViewById(R.id.loginButton);
         registerTV = findViewById(R.id.registrationButton);
-
+        session = new SessionManager(getApplicationContext());
 
         registerTV.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
                 Users user  = new Users(email,password);
+                String id = myDbHandler.getUser(email,password);
 
                 if(email.equals("")||password.equals("")){
                     Toast.makeText(LoginActivity.this, "Моля въведете всички полета!", Toast.LENGTH_SHORT).show();
@@ -60,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
                     Boolean checkLoginParametersExist = myDbHandler.checkLoginParametersExist(user);
                     if(checkLoginParametersExist == true){
                         Toast.makeText(LoginActivity.this, "Успешно се логнахте!", Toast.LENGTH_SHORT).show();
-                        myDbHandler.changeStatus(user);
+                        session.saveSession(Integer.parseInt(id));
                         startActivity(new Intent(getApplicationContext(), MainActivity.class));
                     }else{
                         Toast.makeText(LoginActivity.this, "Невалидни данни!", Toast.LENGTH_SHORT).show();

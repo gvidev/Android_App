@@ -21,7 +21,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
     public static final String COLUMN_EMAIL = "email";
     public static final String COLUMN_PASSWORD = "password";
     public static final String COLUMN_NAME = "name";
-    public static final String COLUMN_IS_CURRENT_USER = "isCurrentUser";
+//    public static final String COLUMN_IS_CURRENT_USER = "isCurrentUser";
 
 
     public MyDBHandler(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
@@ -35,9 +35,9 @@ public class MyDBHandler extends SQLiteOpenHelper {
                 COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_EMAIL + " TEXT ," +
                 COLUMN_PASSWORD + " TEXT ," +
-                COLUMN_NAME + " TEXT ," +
-                COLUMN_IS_CURRENT_USER + " TEXT " +
-                ");" ;
+                COLUMN_NAME + " TEXT " +
+//                COLUMN_IS_CURRENT_USER + " TEXT " +
+                ");";
         sqLiteDatabase.execSQL(query);
     }
 
@@ -49,19 +49,19 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
 
     //add a new row to the table Users
-    public Boolean Registration(Users user){
+    public Boolean Registration(Users user) {
         String bool = "false";
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME, user.getName());
         values.put(COLUMN_EMAIL, user.getEmail());
-        values.put(COLUMN_PASSWORD,user.getPassword());
-        values.put(COLUMN_IS_CURRENT_USER, bool);
+        values.put(COLUMN_PASSWORD, user.getPassword());
+//        values.put(COLUMN_IS_CURRENT_USER, bool);
         SQLiteDatabase db = getWritableDatabase();
         //db.insert returns type long
         long result = db.insert(TABLE_USERS_NAME, null, values);
         db.close();
 
-        if(result == -1)
+        if (result == -1)
             return false;
         else
             return true;
@@ -69,14 +69,14 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
     //I use this for registration logic
     //this method check if the email already exists in the table users
-    public Boolean checkRegistrationExist(Users user){
+    public Boolean checkRegistrationExist(Users user) {
         SQLiteDatabase db = getWritableDatabase();
 
         //rawQuery method ask for query and array where to put the selected info
         Cursor cursor = db.rawQuery("Select * from users where email = ?",
                 new String[]{user.getEmail()});
 
-        if(cursor.getCount()>0)
+        if (cursor.getCount() > 0)
             return true;
         else
             return false;
@@ -85,34 +85,56 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
     //Here I use this method for login purpose
     ////this method should check if the email and password was in the database
-    public Boolean checkLoginParametersExist(Users user){
+    public Boolean checkLoginParametersExist(Users user) {
         SQLiteDatabase db = getWritableDatabase();
 
 
         //rawQuery method ask for query and array where to put the selected info
         Cursor cursor = db.rawQuery("Select * from users where email = ? and password = ?",
-                new String[] {user.getEmail(),user.getPassword()});
+                new String[]{user.getEmail(), user.getPassword()});
 
 
-        if(cursor.getCount()>0) {
+        if (cursor.getCount() > 0) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
 
     }
 
-    public void changeStatus(Users user){
-        String email = user.getEmail();
+    public String[] getUserById(String user_id) {
         SQLiteDatabase db = getWritableDatabase();
-        Cursor cursor = db.rawQuery("update " + TABLE_USERS_NAME
-                + " set isCurrentUser=true where email ='" + email + "'",null);
+        String email= "";
+        String username = "";
+        String[] result = new String[2];
+        Cursor cursor = db.rawQuery("Select email from users where id =" +user_id ,null);
 
+        if(cursor.moveToFirst()){
+            email += cursor.getString(0);
+
+        }else{
+            email = "not found";
+
+        }
+
+        result[0] = email;
+
+        return result;
     }
 
+    public String getUser(String email, String password) {
+        SQLiteDatabase db = getWritableDatabase();
+        String result = "";
+        Cursor cursor = db.rawQuery("Select id from users where email = ? and password = ?",
+                new String[]{email, password});
 
+        if (cursor.moveToFirst()) {
+                result = result + cursor.getString(0);
+            } else {
+                result = result + "result not found";
+            }
 
-
+        return result;
+    }
 
 }
