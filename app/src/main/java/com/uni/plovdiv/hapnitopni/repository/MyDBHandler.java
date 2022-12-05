@@ -102,19 +102,17 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
     }
 
-    public String[] getUserById(String user_id) {
+    public String[] getUserEmail(String user_id) {
         SQLiteDatabase db = getWritableDatabase();
         String email= "";
-        String username = "";
-        String[] result = new String[2];
-        Cursor cursor = db.rawQuery("Select email from users where id =" +user_id ,null);
+        String[] result = new String[1];
+        Cursor cursor = db.rawQuery("Select email from users where id =" + user_id ,null);
 
         if(cursor.moveToFirst()){
             email += cursor.getString(0);
 
         }else{
             email = "not found";
-
         }
 
         result[0] = email;
@@ -122,7 +120,25 @@ public class MyDBHandler extends SQLiteOpenHelper {
         return result;
     }
 
-    public String getUser(String email, String password) {
+    public String[] getUserName(String user_id) {
+        SQLiteDatabase db = getWritableDatabase();
+        String name= "";
+        String[] result = new String[1];
+        Cursor cursor = db.rawQuery("Select name from users where id =" + user_id ,null);
+
+        if(cursor.moveToFirst()){
+            name += cursor.getString(0);
+
+        }else{
+            name = "not found";
+        }
+
+        result[0] = name;
+
+        return result;
+    }
+
+    public String getUserId(String email, String password) {
         SQLiteDatabase db = getWritableDatabase();
         String result = "";
         Cursor cursor = db.rawQuery("Select id from users where email = ? and password = ?",

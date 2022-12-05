@@ -14,25 +14,34 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="80dp"
-        android:layout_height="71dp"
+        android:layout_width="51dp"
+        android:layout_height="51dp"
         android:contentDescription="@string/nav_header_desc"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         app:srcCompat="@drawable/joy" />
 
     <TextView
         android:id="@+id/currentDateFull"
-        android:layout_width="match_parent"
+        android:layout_width="153dp"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:text=""
-        android:textStyle="bold"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:text="getDate"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/fullNameFromCurrentLoginTV"
+        android:layout_width="222dp"
+        android:layout_height="wrap_content"
+        android:text="getName"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/emailFromCurrentLoginTV"
-        android:textStyle="bold"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="" />
+        android:text="getEmail"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textStyle="bold" />
+
 </LinearLayout>

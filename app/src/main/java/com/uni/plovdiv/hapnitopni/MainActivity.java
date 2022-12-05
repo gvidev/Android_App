@@ -44,12 +44,20 @@ public class MainActivity extends AppCompatActivity {
     MyDBHandler myDbHandler;
     Button exitButton;
     TextView currentDateTV;
-    TextView emailForHeader;
+    TextView emailForHeaderTV;
+    TextView nameForHeaderTV;
 
-    String[] dataFromDB;
+
 
     String currentDate ;
+
+    //use this to get user_id from the login activity
     SessionManager session;
+
+    //this should be the retrieved data from db
+    String[] emailFromDB;
+    String[] nameFromDB;
+
 
     int current_user_id;
 
@@ -62,11 +70,12 @@ public class MainActivity extends AppCompatActivity {
         session = new SessionManager(this);
 
         myDbHandler = new MyDBHandler(this, null,null, 1);
-        currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+        currentDate = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date());
         current_user_id = session.getSession();
 
 
-        dataFromDB = myDbHandler.getUserById(String.valueOf(current_user_id));
+        emailFromDB = myDbHandler.getUserEmail(String.valueOf(current_user_id));
+        nameFromDB = myDbHandler.getUserName(String.valueOf(current_user_id));
 
 
 
@@ -102,11 +111,13 @@ public class MainActivity extends AppCompatActivity {
         //here i initialize the optionMenu button- exit
         exitButton = findViewById(R.id.exitButton);
 
-        emailForHeader = findViewById(R.id.emailFromCurrentLoginTV);
+        emailForHeaderTV = findViewById(R.id.emailFromCurrentLoginTV);
         currentDateTV = findViewById(R.id.currentDateFull);
-       currentDateTV.setText(currentDate);
+        nameForHeaderTV = findViewById(R.id.fullNameFromCurrentLoginTV);
 
-       emailForHeader.setText(dataFromDB[0]);
+        currentDateTV.setText(currentDate);
+        emailForHeaderTV.setText(emailFromDB[0]);
+        nameForHeaderTV.setText(nameFromDB[0]);
 
         //and set to go from one activity to start
         //and with that i reset the current state of program

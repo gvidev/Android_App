@@ -55,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
                 Users user  = new Users(email,password);
-                String id = myDbHandler.getUser(email,password);
+                String id = myDbHandler.getUserId(email,password);
 
                 if(email.equals("")||password.equals("")){
                     Toast.makeText(LoginActivity.this, "Моля въведете всички полета!", Toast.LENGTH_SHORT).show();
