@@ -42,7 +42,7 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
-    private ActivityMainBinding binding;
+     ActivityMainBinding binding;
 
     MyDBHandler myDbHandler;
     Button exitButton;
@@ -65,8 +65,6 @@ public class MainActivity extends AppCompatActivity {
     int current_user_id;
     //
 
-
-    RecyclerView recyclerView;
 
 
 
@@ -93,17 +91,7 @@ public class MainActivity extends AppCompatActivity {
 
         //
 
-        recyclerView = findViewById(R.id.recycleView);
-        ArrayList<Products> products = new ArrayList<>();
-        products.add(new Products
-                (R.drawable.pizza, "Пица Верона", "12.00лв.", "Много вкусна направо не знам!"));
-        products.add(new Products
-                (R.drawable.fish, "Крехко месце", "14.90лв.", "Приготвено на плоча с любов!"));
 
-//        productsAdapter adapter = new productsAdapter(products,this);
-//        recyclerView.setAdapter(adapter);
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-//        recyclerView.setLayoutManager(layoutManager);
 
 
 

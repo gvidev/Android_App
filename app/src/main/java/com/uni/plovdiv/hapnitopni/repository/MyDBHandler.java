@@ -15,13 +15,29 @@ public class MyDBHandler extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "hapniTopni.db";
 
-    //table USER info
+    //table USERS info
     public static final String TABLE_USERS_NAME = "users";
-    public static final String COLUMN_ID = "id";
+    public static final String COLUMN_USER_ID = "id";
     public static final String COLUMN_EMAIL = "email";
     public static final String COLUMN_PASSWORD = "password";
     public static final String COLUMN_NAME = "name";
 //    public static final String COLUMN_IS_CURRENT_USER = "isCurrentUser";
+
+    //table PRODUCTS info
+    public static final String TABLE_PRODUCTS_NAME = "products";
+    public static final String COLUMN_PRODUCT_ID = "id";
+    public static final String COLUMN_IMAGE_ID = "image_id";
+    public static final String COLUMN_PRODUCT_NAME = "product_name";
+    public static final String COLUMN_DESCRIPTION = "description";
+    public static final String COLUMN_PRICE = "price";
+
+    //table ORDERS info
+    public static final String TABLE_ORDERS_NAME = "products";
+    public static final String COLUMN_ORDER_ID = "id";
+    public static final String COLUMN_USER_TO_ORDERS_ID = "user_id";
+    public static final String COLUMN_PRODUCT_TO_ORDERS_ID = "product_ID";
+    public static final String COLUMN_QUANTITY = "quantity";
+
 
 
     public MyDBHandler(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
@@ -32,18 +48,38 @@ public class MyDBHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
         String query = "CREATE TABLE " + TABLE_USERS_NAME + "(" +
-                COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COLUMN_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_EMAIL + " TEXT ," +
                 COLUMN_PASSWORD + " TEXT ," +
                 COLUMN_NAME + " TEXT " +
 //                COLUMN_IS_CURRENT_USER + " TEXT " +
                 ");";
+
+        String query2 = "CREATE TABLE " + TABLE_PRODUCTS_NAME + "(" +
+                COLUMN_PRODUCT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COLUMN_IMAGE_ID + " TEXT ," +
+                COLUMN_PRODUCT_NAME + " TEXT ," +
+                COLUMN_DESCRIPTION + " TEXT ," +
+                COLUMN_PRICE + " TEXT " +
+                ");";
+
+        String query3 = "CREATE TABLE " + TABLE_ORDERS_NAME + "(" +
+                COLUMN_ORDER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COLUMN_USER_TO_ORDERS_ID + " INTEGER ," +
+                COLUMN_PRODUCT_TO_ORDERS_ID + " INTEGER ," +
+                COLUMN_QUANTITY + " INTEGER " +
+                ");";
+
         sqLiteDatabase.execSQL(query);
+        sqLiteDatabase.execSQL(query2);
+        sqLiteDatabase.execSQL(query3);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_PRODUCTS_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_ORDERS_NAME);
         onCreate(sqLiteDatabase);
     }
 

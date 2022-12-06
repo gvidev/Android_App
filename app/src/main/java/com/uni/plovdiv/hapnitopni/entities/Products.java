@@ -1,16 +1,25 @@
 package com.uni.plovdiv.hapnitopni.entities;
 
 public class Products {
-    int image;
-    String name;
-    String description;
-    String price;
+    private int id;
+    private int image;
+    private String name;
+    private String description;
+    private String price;
 
     public Products(int image, String name, String description, String price) {
         this.image = image;
         this.name = name;
         this.description = description;
         this.price = price;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getImage() {
