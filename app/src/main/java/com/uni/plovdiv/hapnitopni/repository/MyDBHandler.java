@@ -32,7 +32,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
     public static final String COLUMN_PRICE = "price";
 
     //table ORDERS info
-    public static final String TABLE_ORDERS_NAME = "products";
+    public static final String TABLE_ORDERS_NAME = "orders";
     public static final String COLUMN_ORDER_ID = "id";
     public static final String COLUMN_USER_TO_ORDERS_ID = "user_id";
     public static final String COLUMN_PRODUCT_TO_ORDERS_ID = "product_ID";
@@ -63,30 +63,29 @@ public class MyDBHandler extends SQLiteOpenHelper {
                 COLUMN_PRICE + " TEXT " +
                 ");";
 
-        String query3 = "CREATE TABLE " + TABLE_ORDERS_NAME + "(" +
-                COLUMN_ORDER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COLUMN_USER_TO_ORDERS_ID + " INTEGER ," +
-                COLUMN_PRODUCT_TO_ORDERS_ID + " INTEGER ," +
-                COLUMN_QUANTITY + " INTEGER " +
-                ");";
+//        String query3 = "CREATE TABLE " + TABLE_ORDERS_NAME + "(" +
+//                COLUMN_ORDER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+//                COLUMN_USER_TO_ORDERS_ID + " INTEGER ," +
+//                COLUMN_PRODUCT_TO_ORDERS_ID + " INTEGER ," +
+//                COLUMN_QUANTITY + " INTEGER " +
+//                ");";
 
         sqLiteDatabase.execSQL(query);
         sqLiteDatabase.execSQL(query2);
-        sqLiteDatabase.execSQL(query3);
+//        sqLiteDatabase.execSQL(query3);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS_NAME);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_PRODUCTS_NAME);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_ORDERS_NAME);
+//        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_ORDERS_NAME);
         onCreate(sqLiteDatabase);
     }
 
 
     //add a new row to the table Users
     public Boolean Registration(Users user) {
-        String bool = "false";
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME, user.getName());
         values.put(COLUMN_EMAIL, user.getEmail());
@@ -97,10 +96,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         long result = db.insert(TABLE_USERS_NAME, null, values);
         db.close();
 
-        if (result == -1)
-            return false;
-        else
-            return true;
+        return result != -1;
     }
 
     //I use this for registration logic
@@ -130,11 +126,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
                 new String[]{user.getEmail(), user.getPassword()});
 
 
-        if (cursor.getCount() > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return cursor.getCount() > 0;
 
     }
 

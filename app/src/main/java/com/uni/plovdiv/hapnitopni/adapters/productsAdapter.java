@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,58 +16,39 @@ import com.uni.plovdiv.hapnitopni.R;
 import com.uni.plovdiv.hapnitopni.entities.Products;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class productsAdapter extends RecyclerView.Adapter<productsAdapter.viewHolder>{
+public class productsAdapter extends BaseAdapter {
 
-    ArrayList<Products> products;
-    Context context;
+    ArrayList<String> items;
 
-    public productsAdapter(ArrayList<Products> productsArrayList, Context context) {
-        this.products = productsArrayList;
-        this.context = context;
+    public productsAdapter(ArrayList<String> items) {
+        super();
+        this.items = items;
     }
 
-    @NonNull
-    @Override
-    public viewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.menu_fragment, parent, false);
-        return new viewHolder(view);
-    }
 
     @Override
-    public void onBindViewHolder(@NonNull viewHolder holder, int position) {
-        final Products model = products.get(position);
-        holder.foodImageIV.setImageResource(model.getImage());
-        holder.nameTV.setText(model.getName());
-        holder.descriptionTV.setText(model.getDescription());
-        holder.priceTV.setText(model.getPrice());
+    public int getCount() {
+        return items.size();
     }
 
     @Override
-    public int getItemCount() {
-        return products.size();
+    public Object getItem(int i) {
+        return items.get(i);
     }
 
-    public class viewHolder extends RecyclerView.ViewHolder {
-
-        ImageView foodImageIV;
-        TextView nameTV;
-        TextView descriptionTV;
-        TextView priceTV;
-       // Button buyB;
-
-        public viewHolder(@NonNull View itemView) {
-            super(itemView);
-
-            foodImageIV = itemView.findViewById(R.id.product_image);
-            nameTV = itemView.findViewById(R.id.product_name);
-            descriptionTV = itemView.findViewById(R.id.product_description);
-            priceTV = itemView.findViewById(R.id.product_price);
-            //buyB = itemView.findViewById(R.id.product_button);
-
-        }
-
-
+    @Override
+    public long getItemId(int i) {
+        return items.get(i).hashCode();
     }
+
+    @Override
+    public View getView(int i, View view, ViewGroup viewGroup) {
+        TextView textView = new TextView(viewGroup.getContext());
+        textView.setText(items.get(i));
+        return textView;
+    }
+
 
 }

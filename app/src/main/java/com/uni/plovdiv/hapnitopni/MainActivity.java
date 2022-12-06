@@ -19,22 +19,19 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.uni.plovdiv.hapnitopni.Session.SessionManager;
 
 import com.uni.plovdiv.hapnitopni.activities.StartActivity;
-import com.uni.plovdiv.hapnitopni.adapters.productsAdapter;
 import com.uni.plovdiv.hapnitopni.databinding.ActivityMainBinding;
 
-import com.uni.plovdiv.hapnitopni.entities.Products;
 import com.uni.plovdiv.hapnitopni.repository.MyDBHandler;
+import com.uni.plovdiv.hapnitopni.ui.gallery.MenuFragment;
+import com.uni.plovdiv.hapnitopni.ui.home.HomeFragment;
 
 
 import java.text.SimpleDateFormat;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
@@ -42,7 +39,7 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
-     ActivityMainBinding binding;
+    private ActivityMainBinding binding;
 
     MyDBHandler myDbHandler;
     Button exitButton;
@@ -61,19 +58,17 @@ public class MainActivity extends AppCompatActivity {
     String[] emailFromDB;
     String[] nameFromDB;
 
-
     int current_user_id;
     //
-
-
-
-
-
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
 
         session = new SessionManager(this);
 
@@ -86,15 +81,11 @@ public class MainActivity extends AppCompatActivity {
         nameFromDB = myDbHandler.getUserName(String.valueOf(current_user_id));
 
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+
+
+
 
         //
-
-
-
-
-
 
 
         setSupportActionBar(binding.appBarMain.toolbar);
