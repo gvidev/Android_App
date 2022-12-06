@@ -10,7 +10,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.uni.plovdiv.hapnitopni.MainActivity;
 import com.uni.plovdiv.hapnitopni.R;
 import com.uni.plovdiv.hapnitopni.entities.Users;
 import com.uni.plovdiv.hapnitopni.repository.MyDBHandler;
