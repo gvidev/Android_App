@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import com.uni.plovdiv.hapnitopni.entities.Products;
 import com.uni.plovdiv.hapnitopni.entities.Users;
 
 public class MyDBHandler extends SQLiteOpenHelper {
@@ -26,7 +27,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
     //table PRODUCTS info
     public static final String TABLE_PRODUCTS_NAME = "products";
     public static final String COLUMN_PRODUCT_ID = "id";
-    public static final String COLUMN_IMAGE_ID = "image_id";
+    public static final String COLUMN_IMAGE_NAME = "image_name";
     public static final String COLUMN_PRODUCT_NAME = "product_name";
     public static final String COLUMN_DESCRIPTION = "description";
     public static final String COLUMN_PRICE = "price";
@@ -55,9 +56,11 @@ public class MyDBHandler extends SQLiteOpenHelper {
 //                COLUMN_IS_CURRENT_USER + " TEXT " +
                 ");";
 
+
+        //if price is string could be easiest for retrieving data and put in the fragment using TextView
         String query2 = "CREATE TABLE " + TABLE_PRODUCTS_NAME + "(" +
                 COLUMN_PRODUCT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COLUMN_IMAGE_ID + " TEXT ," +
+                COLUMN_IMAGE_NAME + " TEXT ," +
                 COLUMN_PRODUCT_NAME + " TEXT ," +
                 COLUMN_DESCRIPTION + " TEXT ," +
                 COLUMN_PRICE + " TEXT " +
@@ -81,6 +84,35 @@ public class MyDBHandler extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_PRODUCTS_NAME);
 //        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_ORDERS_NAME);
         onCreate(sqLiteDatabase);
+    }
+
+    //add a new product in table Products
+    public void addProduct(Products product) {
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_IMAGE_NAME, product.getImage());
+        values.put(COLUMN_PRODUCT_NAME, product.getName());
+        values.put(COLUMN_DESCRIPTION, product.getDescription());
+        values.put(COLUMN_PRICE, product.getPrice());
+
+        SQLiteDatabase db = getWritableDatabase();
+
+        db.insert(TABLE_PRODUCTS_NAME, null, values);
+        db.close();
+    }
+
+    //check if already have a product with the same name
+    public Boolean checkProductExist(Products product) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        //rawQuery method ask for query and array where to put the selected info
+        Cursor cursor = db.rawQuery("Select * from products where product_name = ?",
+                new String[]{product.getName()});
+
+        if (cursor.getCount() > 0)
+            return true;
+        else
+            return false;
+
     }
 
 

@@ -2,12 +2,12 @@ package com.uni.plovdiv.hapnitopni.entities;
 
 public class Products {
     private int id;
-    private int image;
+    private String image;
     private String name;
     private String description;
     private String price;
 
-    public Products(int image, String name, String description, String price) {
+    public Products(String image, String name, String description, String price) {
         this.image = image;
         this.name = name;
         this.description = description;
@@ -22,11 +22,11 @@ public class Products {
         this.id = id;
     }
 
-    public int getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(int image) {
+    public void setImage(String image) {
         this.image = image;
     }
 

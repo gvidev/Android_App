@@ -25,6 +25,7 @@ import com.uni.plovdiv.hapnitopni.Session.SessionManager;
 import com.uni.plovdiv.hapnitopni.activities.StartActivity;
 import com.uni.plovdiv.hapnitopni.databinding.ActivityMainBinding;
 
+import com.uni.plovdiv.hapnitopni.entities.Products;
 import com.uni.plovdiv.hapnitopni.repository.MyDBHandler;
 import com.uni.plovdiv.hapnitopni.ui.gallery.MenuFragment;
 import com.uni.plovdiv.hapnitopni.ui.home.HomeFragment;
@@ -32,7 +33,9 @@ import com.uni.plovdiv.hapnitopni.ui.home.HomeFragment;
 
 import java.text.SimpleDateFormat;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 
@@ -59,12 +62,40 @@ public class MainActivity extends AppCompatActivity {
     String[] nameFromDB;
 
     int current_user_id;
-    //
+
+
+
+
+    List<Products> products = new ArrayList<Products>();
+
+
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //not the best way to do it but still works :)
+        //can be optimized!!!
+        //Add instances of products
+        Products pr1 = new Products("pizza.jpg","Пица","Изпечена на фурна","12.90");
+        Products pr2 = new Products("fish.jpg","Риба","Изпечена на плоча","15.20");
+        Products pr3 = new Products("sushi.jpg","Суши","Със сусам и сьомга","20.40");
+        Products pr4 = new Products("salad.jpg","Салата","Направена с любов","10.55");
+        Products pr5 = new Products("pasta.jpg","Паста","Болонезе с два типа месо","14.10");
+        Products pr6 = new Products("cake.jpg","Десерт","Домашно приготвен","4.30");
+
+        //now try with one more to be sure - adding to database
+
+
+        //adding products to list
+        products.add(pr1);
+        products.add(pr2);
+        products.add(pr3);
+        products.add(pr4);
+        products.add(pr5);
+        products.add(pr6);
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -81,7 +112,12 @@ public class MainActivity extends AppCompatActivity {
         nameFromDB = myDbHandler.getUserName(String.valueOf(current_user_id));
 
 
-
+        //if I have already product with that name i dont want to add in the database
+        for(Products x : products){
+            if (myDbHandler.checkProductExist(x) !=true){
+                myDbHandler.addProduct(x);
+            }
+        }
 
 
 
