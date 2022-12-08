@@ -11,6 +11,8 @@ import androidx.annotation.Nullable;
 import com.uni.plovdiv.hapnitopni.entities.Products;
 import com.uni.plovdiv.hapnitopni.entities.Users;
 
+import java.util.ArrayList;
+
 public class MyDBHandler extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
@@ -27,17 +29,17 @@ public class MyDBHandler extends SQLiteOpenHelper {
     //table PRODUCTS info
     public static final String TABLE_PRODUCTS_NAME = "products";
     public static final String COLUMN_PRODUCT_ID = "id";
-    public static final String COLUMN_IMAGE_NAME = "image_name";
+    public static final String COLUMN_IMAGE_ID = "image_id";
     public static final String COLUMN_PRODUCT_NAME = "product_name";
     public static final String COLUMN_DESCRIPTION = "description";
     public static final String COLUMN_PRICE = "price";
 
     //table ORDERS info
-    public static final String TABLE_ORDERS_NAME = "orders";
-    public static final String COLUMN_ORDER_ID = "id";
-    public static final String COLUMN_USER_TO_ORDERS_ID = "user_id";
-    public static final String COLUMN_PRODUCT_TO_ORDERS_ID = "product_ID";
-    public static final String COLUMN_QUANTITY = "quantity";
+//    public static final String TABLE_ORDERS_NAME = "orders";
+//    public static final String COLUMN_ORDER_ID = "id";
+//    public static final String COLUMN_USER_TO_ORDERS_ID = "user_id";
+//    public static final String COLUMN_PRODUCT_TO_ORDERS_ID = "product_ID";
+//    public static final String COLUMN_QUANTITY = "quantity";
 
 
 
@@ -60,7 +62,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         //if price is string could be easiest for retrieving data and put in the fragment using TextView
         String query2 = "CREATE TABLE " + TABLE_PRODUCTS_NAME + "(" +
                 COLUMN_PRODUCT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COLUMN_IMAGE_NAME + " TEXT ," +
+                COLUMN_IMAGE_ID + " INTEGER ," +
                 COLUMN_PRODUCT_NAME + " TEXT ," +
                 COLUMN_DESCRIPTION + " TEXT ," +
                 COLUMN_PRICE + " TEXT " +
@@ -89,7 +91,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
     //add a new product in table Products
     public void addProduct(Products product) {
         ContentValues values = new ContentValues();
-        values.put(COLUMN_IMAGE_NAME, product.getImage());
+        values.put(COLUMN_IMAGE_ID, product.getImage());
         values.put(COLUMN_PRODUCT_NAME, product.getName());
         values.put(COLUMN_DESCRIPTION, product.getDescription());
         values.put(COLUMN_PRICE, product.getPrice());
@@ -114,6 +116,35 @@ public class MyDBHandler extends SQLiteOpenHelper {
             return false;
 
     }
+
+    // we have created a new method for reading all the courses.
+    public ArrayList<Products> allProducts() {
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "Select * from " + TABLE_PRODUCTS_NAME;
+        Cursor cursor = db.rawQuery(query, null);
+
+        ArrayList<Products> productsArrayList= new ArrayList<>();
+
+        // from first to last row in table products
+        if (cursor.moveToFirst()) {
+            do {
+                //adding the data
+                productsArrayList.add(new Products(cursor.getInt(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        cursor.getString(4)));
+            } while (cursor.moveToNext());
+
+        }
+
+        cursor.close();
+        //return ArrayList for easiest use
+        return productsArrayList;
+    }
+
+
+
 
 
     //add a new row to the table Users
@@ -156,7 +187,6 @@ public class MyDBHandler extends SQLiteOpenHelper {
         //rawQuery method ask for query and array where to put the selected info
         Cursor cursor = db.rawQuery("Select * from users where email = ? and password = ?",
                 new String[]{user.getEmail(), user.getPassword()});
-
 
         return cursor.getCount() > 0;
 

@@ -13,4 +13,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string name="head_1">Alokin</string>
+    <string name="head_2">Vonahcluv</string>
+
 </resources>

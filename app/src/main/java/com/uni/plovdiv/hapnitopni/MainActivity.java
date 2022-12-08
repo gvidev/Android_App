@@ -3,6 +3,7 @@ package com.uni.plovdiv.hapnitopni;
 
 import android.content.Intent;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
@@ -31,6 +32,7 @@ import com.uni.plovdiv.hapnitopni.ui.gallery.MenuFragment;
 import com.uni.plovdiv.hapnitopni.ui.home.HomeFragment;
 
 
+import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
@@ -76,15 +78,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        int resID_1 = getResId("pizza", R.drawable.class); // or other resource class
+        int resID_2 = getResId("fish", R.drawable.class);
+        int resID_3 = getResId("sushi", R.drawable.class);
+        int resID_4 = getResId("salad", R.drawable.class);
+        int resID_5 = getResId("pasta", R.drawable.class);
+        int resID_6 = getResId("cake", R.drawable.class);
+        int resID_7 = getResId("cocktail", R.drawable.class);
         //not the best way to do it but still works :)
         //can be optimized!!!
         //Add instances of products
-        Products pr1 = new Products("pizza.jpg","Пица","Изпечена на фурна","12.90");
-        Products pr2 = new Products("fish.jpg","Риба","Изпечена на плоча","15.20");
-        Products pr3 = new Products("sushi.jpg","Суши","Със сусам и сьомга","20.40");
-        Products pr4 = new Products("salad.jpg","Салата","Направена с любов","10.55");
-        Products pr5 = new Products("pasta.jpg","Паста","Болонезе с два типа месо","14.10");
-        Products pr6 = new Products("cake.jpg","Десерт","Домашно приготвен","4.30");
+        Products pr1 = new Products(resID_1,"Пица","Изпечена на фурна","12.90");
+        Products pr2 = new Products(resID_2,"Риба","Изпечена на плоча","15.20");
+        Products pr3 = new Products(resID_3,"Суши","Със сусам и сьомга","20.40");
+        Products pr4 = new Products(resID_4,"Салата","Направена с любов","10.55");
+        Products pr5 = new Products(resID_5,"Паста","Болонезе с два типа месо","14.10");
+        Products pr6 = new Products(resID_6,"Десерт","Домашно приготвен","4.30");
+        Products pr7 = new Products(resID_7,"Коктейл","Джин с тоник","8.30");
 
         //now try with one more to be sure - adding to database
 
@@ -96,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
         products.add(pr4);
         products.add(pr5);
         products.add(pr6);
+        products.add(pr7);
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -118,9 +129,6 @@ public class MainActivity extends AppCompatActivity {
                 myDbHandler.addProduct(x);
             }
         }
-
-
-
         //
 
 
@@ -179,6 +187,20 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
+
+    //this method retrieve int id from the resource and it is generic
+    public static int getResId(String resName, Class<?> c) {
+
+        try {
+            Field idField = c.getDeclaredField(resName);
+            return idField.getInt(idField);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
 
 
 
