@@ -3,7 +3,6 @@ package com.uni.plovdiv.hapnitopni;
 
 import android.content.Intent;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
@@ -28,8 +27,6 @@ import com.uni.plovdiv.hapnitopni.databinding.ActivityMainBinding;
 
 import com.uni.plovdiv.hapnitopni.entities.Products;
 import com.uni.plovdiv.hapnitopni.repository.MyDBHandler;
-import com.uni.plovdiv.hapnitopni.ui.gallery.MenuFragment;
-import com.uni.plovdiv.hapnitopni.ui.home.HomeFragment;
 
 
 import java.lang.reflect.Field;
