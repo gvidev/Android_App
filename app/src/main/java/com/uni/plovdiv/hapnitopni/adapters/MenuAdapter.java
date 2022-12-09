@@ -6,6 +6,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -45,7 +46,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MyViewHolder> 
         holder.image.setImageResource(product.getImage());
         holder.name.setText(product.getName());
         holder.description.setText(product.getDescription());
-        holder.price.setText(product.getPrice());
+        holder.price.setText(product.getPrice()+"лв");
     }
 
     @Override
@@ -59,6 +60,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MyViewHolder> 
         TextView name;
         TextView description;
         TextView price;
+        Button button;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -66,6 +68,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MyViewHolder> 
             name = itemView.findViewById(R.id.product_name);
             description = itemView.findViewById(R.id.product_description);
             price = itemView.findViewById(R.id.product_price);
+            button = itemView.findViewById(R.id.product_button);
         }
     }
 }

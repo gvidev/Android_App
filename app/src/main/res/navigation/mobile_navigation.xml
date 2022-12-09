@@ -11,6 +11,11 @@
         android:label="Начало"
         tools:layout="@layout/fragment_home" >
 
+        <action
+            android:id="@+id/action_nav_home_to_nav_menu"
+            app:destination="@id/nav_menu"
+            app:enterAnim="@android:anim/fade_in"
+            app:popEnterAnim="@android:anim/fade_in" />
     </fragment>
 
     <fragment
@@ -25,8 +30,8 @@
         android:label="Любими"
         tools:layout="@layout/favourite_fragment" />
     <fragment
-        android:id="@+id/nav_my_cart"
-        android:name="com.uni.plovdiv.hapnitopni.ui.MyCartFragment"
-        android:label="Количка"
-        tools:layout="@layout/fragment_my_cart" />
+        android:id="@+id/nav_edit_user"
+        android:name="com.uni.plovdiv.hapnitopni.ui.EditUserFragment"
+        android:label="Редактиране на профил"
+        tools:layout="@layout/fragment_edit_user" />
 </navigation>

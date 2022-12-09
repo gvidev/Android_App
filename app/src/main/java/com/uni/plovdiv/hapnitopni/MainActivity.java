@@ -1,6 +1,7 @@
 package com.uni.plovdiv.hapnitopni;
 
 
+import android.app.Notification;
 import android.content.Intent;
 
 import android.os.Bundle;
@@ -66,9 +67,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     List<Products> products = new ArrayList<Products>();
-
-
-
 
 
     @Override
@@ -137,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_menu, R.id.nav_favourite, R.id.nav_my_cart)
+                R.id.nav_home, R.id.nav_menu, R.id.nav_favourite, R.id.nav_edit_user)
                 .setOpenableLayout(drawer)
                 .build();
 

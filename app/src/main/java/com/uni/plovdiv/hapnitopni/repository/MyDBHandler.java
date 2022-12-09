@@ -243,4 +243,23 @@ public class MyDBHandler extends SQLiteOpenHelper {
         return result;
     }
 
+    public void deleteUser(int userId){
+        SQLiteDatabase db = getWritableDatabase();
+        String query  = String.format("Delete from users where id = %d", userId);
+        db.execSQL(query);
+    }
+
+    public void editUser(int id,String name, String email, String password){
+        SQLiteDatabase db = getWritableDatabase();
+        String query =
+                String.format("Update users " +
+                                "set name = %s, email = %s, password = %s" +
+                                " where id = %d",
+                                      name,email,password, id);
+
+        db.execSQL(query);
+    }
+
+
+
 }

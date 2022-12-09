@@ -17,8 +17,8 @@
             android:icon="@drawable/ic_baseline_favorite_24"
             android:title="Любими" />
         <item
-            android:id="@+id/nav_my_cart"
-            android:icon="@drawable/ic_baseline_shopping_cart_24"
-            android:title="Количка" />
+            android:id="@+id/nav_edit_user"
+            android:icon="@drawable/ic_baseline_manage_accounts_24"
+            android:title="Редактиране на профил" />
     </group>
 </menu>

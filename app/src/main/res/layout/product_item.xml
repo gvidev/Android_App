@@ -45,7 +45,8 @@
                     android:id="@+id/product_description"
                     android:layout_width="match_parent"
                     android:layout_height="58dp"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
                     android:text="Много вкусна. Задължително е да се опита. Приготвена на плоча."
                     android:textSize="14sp" />
 
@@ -56,17 +57,17 @@
 
                     <TextView
                         android:id="@+id/product_price"
-                        android:layout_width="wrap_content"
+                        android:layout_width="90dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginLeft="10dp"
                         android:layout_weight="1"
                         android:text="19.50лв."
                         android:textColor="#4CAF50"
-                        android:textSize="19sp" />
+                        android:textSize="17sp" />
 
                     <Button
                         android:id="@+id/product_button"
-                        android:layout_width="106dp"
+                        android:layout_width="116dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="1dp"
