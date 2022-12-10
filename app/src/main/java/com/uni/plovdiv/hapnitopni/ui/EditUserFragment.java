@@ -13,11 +13,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.uni.plovdiv.hapnitopni.MainActivity;
 import com.uni.plovdiv.hapnitopni.R;
 import com.uni.plovdiv.hapnitopni.Session.SessionManager;
 import com.uni.plovdiv.hapnitopni.activities.LoginActivity;
+import com.uni.plovdiv.hapnitopni.activities.RegisterActivity;
 import com.uni.plovdiv.hapnitopni.activities.StartActivity;
 import com.uni.plovdiv.hapnitopni.repository.MyDBHandler;
 
@@ -62,6 +64,8 @@ public class EditUserFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
+
+
         currentName = view.findViewById(R.id.currentName);
         currentEmail = view.findViewById(R.id.currentEmail);
         currentPassword = view.findViewById(R.id.currentPassword);
@@ -73,21 +77,20 @@ public class EditUserFragment extends Fragment {
 
         String[] nameFromDB = myDbHandler.getUserName(String.valueOf(current_user_id));
         String[] emailFromDB = myDbHandler.getUserEmail(String.valueOf(current_user_id));
+        String[] passwordFromDB = myDbHandler.getUserPassword(String.valueOf(current_user_id));
         currentName.setText("Вашето име: " + nameFromDB[0]);
         currentEmail.setText("Вашият имейл: " + emailFromDB[0]);
         currentPassword.setText("Вашата парола: ##########");
 
-        String newName = String.valueOf(editName.getText());
-        String newEmail = editEmail.getText().toString();
-        String newPassword = editPassword.getText().toString();
 
 
-
+        super.onViewCreated(view, savedInstanceState);
 
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 myDbHandler.deleteUser(current_user_id);
+                Toast.makeText(getActivity(), "Успешно премахване на акаунта!", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getActivity(), StartActivity.class));
             }
         });
@@ -95,11 +98,33 @@ public class EditUserFragment extends Fragment {
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                myDbHandler.editUser(current_user_id,newName,newEmail,newPassword);
-                startActivity(new Intent(getActivity(), LoginActivity.class));
+
+                String newName = String.valueOf(editName.getText());
+                String newEmail = editEmail.getText().toString();
+                String newPassword = editPassword.getText().toString();
+
+                if(newPassword.equals("")&&newName.equals("")&&newEmail.equals("")){
+                    Toast.makeText(getContext(),
+                            "Не сте въвели данни, които да промените!", Toast.LENGTH_SHORT).show();
+                }else{
+                    if(newName.equals("")){
+                        newName = nameFromDB[0];
+                    }
+                    if (newEmail.equals("")){
+                        newEmail = emailFromDB[0];
+                    }
+                    if(newPassword.equals("")){
+                        newPassword = passwordFromDB[0];
+                    }
+                    myDbHandler.editUser(current_user_id, newName, newEmail, newPassword);
+                    Toast.makeText(getActivity(),
+                            "Успешно редактиране! Моля влезте с променените данни!",
+                            Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                }
             }
         });
 
-        super.onViewCreated(view, savedInstanceState);
+
     }
 }

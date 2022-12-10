@@ -228,6 +228,24 @@ public class MyDBHandler extends SQLiteOpenHelper {
         return result;
     }
 
+    public String[] getUserPassword(String user_id) {
+        SQLiteDatabase db = getWritableDatabase();
+        String password= "";
+        String[] result = new String[1];
+        Cursor cursor = db.rawQuery("Select password from users where id =" + user_id ,null);
+
+        if(cursor.moveToFirst()){
+            password += cursor.getString(0);
+
+        }else{
+            password = "not found";
+        }
+
+        result[0] = password;
+
+        return result;
+    }
+
     public String getUserId(String email, String password) {
         SQLiteDatabase db = getWritableDatabase();
         String result = "";
@@ -253,11 +271,12 @@ public class MyDBHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         String query =
                 String.format("Update users " +
-                                "set name = %s, email = %s, password = %s" +
+                                "set name = '%s', email = '%s', password = '%s' " +
                                 " where id = %d",
                                       name,email,password, id);
 
         db.execSQL(query);
+
     }
 
 

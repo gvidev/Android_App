@@ -56,26 +56,27 @@ public class RegisterActivity extends AppCompatActivity {
 
                 Users user  = new Users(password,email,fullName);
 
-                //case that every field is empty
-                if(email.equals("")||password.equals("")||fullName.equals("")){
-                    Toast.makeText(RegisterActivity.this, "Моля въведете всички полета!", Toast.LENGTH_SHORT).show();
-                }else {
-                    Boolean checkUserExist = myDbHandler.checkRegistrationExist(user);
-                    if(checkUserExist == false){
-                        Boolean insert =  myDbHandler.Registration(user);
-                        if(insert == true){
-                            Toast.makeText(RegisterActivity.this, "Успешно се регистрирахте!", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                        }else{
-                            Toast.makeText(RegisterActivity.this, "Грешка по време на регистрация!", Toast.LENGTH_SHORT).show();
-                        }
 
-                    }else{
-                        Toast.makeText(RegisterActivity.this, "Вече има регистрация с този имейл!", Toast.LENGTH_SHORT).show();
+                    //case that every field is empty
+                    if (email.equals("") || password.equals("") || fullName.equals("")) {
+                        Toast.makeText(RegisterActivity.this, "Моля въведете всички полета!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Boolean checkUserExist = myDbHandler.checkRegistrationExist(user);
+                        if (checkUserExist == false) {
+                            Boolean insert = myDbHandler.Registration(user);
+                            if (insert == true) {
+                                Toast.makeText(RegisterActivity.this, "Успешно се регистрирахте!", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                            } else {
+                                Toast.makeText(RegisterActivity.this, "Грешка по време на регистрация!", Toast.LENGTH_SHORT).show();
+                            }
+
+                        } else {
+                            Toast.makeText(RegisterActivity.this, "Вече има регистрация с този имейл!", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
 
-            }
         });
     }
 
