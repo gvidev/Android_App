@@ -1,7 +1,6 @@
 package com.uni.plovdiv.hapnitopni;
 
 
-import android.app.Notification;
 import android.content.Intent;
 
 import android.os.Bundle;

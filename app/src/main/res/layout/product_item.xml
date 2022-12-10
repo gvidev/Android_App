@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="144dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -57,9 +58,9 @@
 
                     <TextView
                         android:id="@+id/product_price"
-                        android:layout_width="90dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="20dp"
                         android:layout_weight="1"
                         android:text="19.50лв."
                         android:textColor="#4CAF50"
@@ -67,12 +68,17 @@
 
                     <Button
                         android:id="@+id/product_button"
-                        android:layout_width="116dp"
+                        android:layout_width="54dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="1dp"
+                        android:layout_marginBottom="5dp"
                         android:layout_weight="1"
-                        android:text="Вземи" />
+                        android:background="@drawable/btn_design"
+                        app:icon="@drawable/ic_baseline_favorite_24"
+                        app:iconPadding="0dp"
+                        app:iconTint="@android:color/holo_red_dark"
+                        tools:ignore="TouchTargetSizeCheck" />
 
                 </LinearLayout>
             </LinearLayout>

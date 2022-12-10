@@ -15,11 +15,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.uni.plovdiv.hapnitopni.MainActivity;
 import com.uni.plovdiv.hapnitopni.R;
 import com.uni.plovdiv.hapnitopni.Session.SessionManager;
 import com.uni.plovdiv.hapnitopni.activities.LoginActivity;
-import com.uni.plovdiv.hapnitopni.activities.RegisterActivity;
 import com.uni.plovdiv.hapnitopni.activities.StartActivity;
 import com.uni.plovdiv.hapnitopni.repository.MyDBHandler;
 
@@ -78,9 +76,20 @@ public class EditUserFragment extends Fragment {
         String[] nameFromDB = myDbHandler.getUserName(String.valueOf(current_user_id));
         String[] emailFromDB = myDbHandler.getUserEmail(String.valueOf(current_user_id));
         String[] passwordFromDB = myDbHandler.getUserPassword(String.valueOf(current_user_id));
+
+        //using this for creating a field with number of * stars from passwordCount symbols
+        String passwordSequence = passwordFromDB[0];
+        int passwordCount = passwordSequence.length();
+        String stars = "";
+        for (int i = 0; i<passwordCount; i++ ){
+            stars += "*";
+        }
+
+
+
         currentName.setText("Вашето име: " + nameFromDB[0]);
         currentEmail.setText("Вашият имейл: " + emailFromDB[0]);
-        currentPassword.setText("Вашата парола: ##########");
+        currentPassword.setText("Вашата парола: " + stars);
 
 
 
@@ -99,6 +108,7 @@ public class EditUserFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
+                //working with first variation and the second one
                 String newName = String.valueOf(editName.getText());
                 String newEmail = editEmail.getText().toString();
                 String newPassword = editPassword.getText().toString();
