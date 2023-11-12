@@ -21,6 +21,8 @@ import com.uni.plovdiv.hapnitopni.activities.LoginActivity;
 import com.uni.plovdiv.hapnitopni.activities.StartActivity;
 import com.uni.plovdiv.hapnitopni.repository.MyDBHandler;
 
+import java.util.regex.Pattern;
+
 
 public class EditUserFragment extends Fragment {
 
@@ -39,8 +41,17 @@ public class EditUserFragment extends Fragment {
     Button editButton;
     Button deleteButton;
 
+    String regexPattern;
+
     int current_user_id;
 
+
+    //Email Validation Regex pattern
+    public static boolean patternMatches(String emailAddress, String regexPattern) {
+        return Pattern.compile(regexPattern)
+                .matcher(emailAddress)
+                .matches();
+    }
 
 
 
@@ -72,6 +83,9 @@ public class EditUserFragment extends Fragment {
         editName = view.findViewById(R.id.personNameET);
         editEmail =view.findViewById(R.id.emailET);
         editPassword = view.findViewById(R.id.passwordET);
+        regexPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
+                + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
+
 
         String[] nameFromDB = myDbHandler.getUserName(String.valueOf(current_user_id));
         String[] emailFromDB = myDbHandler.getUserEmail(String.valueOf(current_user_id));
@@ -112,6 +126,7 @@ public class EditUserFragment extends Fragment {
                 String newName = String.valueOf(editName.getText());
                 String newEmail = editEmail.getText().toString();
                 String newPassword = editPassword.getText().toString();
+                Boolean checkEmail = false;
 
                 if(newPassword.equals("")&&newName.equals("")&&newEmail.equals("")){
                     Toast.makeText(getContext(),
@@ -122,15 +137,25 @@ public class EditUserFragment extends Fragment {
                     }
                     if (newEmail.equals("")){
                         newEmail = emailFromDB[0];
+                    }else{
+                        checkEmail = (patternMatches(newEmail, regexPattern));
                     }
                     if(newPassword.equals("")){
                         newPassword = passwordFromDB[0];
                     }
-                    myDbHandler.editUser(current_user_id, newName, newEmail, newPassword);
-                    Toast.makeText(getActivity(),
-                            "Успешно редактиране! Моля влезте с променените данни!",
-                            Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(getActivity(), LoginActivity.class));
+
+                    if(checkEmail){
+                        myDbHandler.editUser(current_user_id, newName, newEmail, newPassword);
+                        Toast.makeText(getActivity(),
+                                "Успешно редактиране! Моля влезте с променените данни!",
+                                Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getActivity(), LoginActivity.class));
+                    }else{
+                        Toast.makeText(getActivity(),
+                                "Грешка във въведените данни!\nМоля опитайте отново!",
+                                Toast.LENGTH_SHORT).show();
+                    }
+
                 }
             }
         });
