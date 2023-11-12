@@ -23,12 +23,16 @@
         android:name="com.uni.plovdiv.hapnitopni.ui.gallery.MenuFragment"
         android:label="Меню"
         tools:layout="@layout/menu_fragment" />
-
     <fragment
         android:id="@+id/nav_favourite"
         android:name="com.uni.plovdiv.hapnitopni.ui.slideshow.FavouriteFragment"
         android:label="Любими"
         tools:layout="@layout/favourite_fragment" />
+    <fragment
+        android:id="@+id/nav_location"
+        android:name="com.uni.plovdiv.hapnitopni.ui.MapsFragment"
+        android:label="Местоположение"
+        tools:layout="@layout/fragment_maps" />
     <fragment
         android:id="@+id/nav_edit_user"
         android:name="com.uni.plovdiv.hapnitopni.ui.EditUserFragment"
