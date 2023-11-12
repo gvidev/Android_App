@@ -14,6 +14,8 @@ import com.uni.plovdiv.hapnitopni.R;
 import com.uni.plovdiv.hapnitopni.entities.Users;
 import com.uni.plovdiv.hapnitopni.repository.MyDBHandler;
 
+import java.util.regex.Pattern;
+
 public class RegisterActivity extends AppCompatActivity {
 
     //there I use to declare my input fields
@@ -24,7 +26,14 @@ public class RegisterActivity extends AppCompatActivity {
     MyDBHandler myDbHandler;
     Button registerB;
     TextView loginB;
+    String regexPattern;
 
+    //Email Validation
+    public static boolean patternMatches(String emailAddress, String regexPattern) {
+        return Pattern.compile(regexPattern)
+                .matcher(emailAddress)
+                .matches();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +46,8 @@ public class RegisterActivity extends AppCompatActivity {
         myDbHandler = new MyDBHandler(this, null,null,1);
         registerB = findViewById(R.id.registerButton);
         loginB = findViewById(R.id.loginButton);
+        regexPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
+                + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
 
         loginB.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,7 +64,7 @@ public class RegisterActivity extends AppCompatActivity {
                 String password = passwordET.getText().toString();
                 String email = emailET.getText().toString();
                 String fullName = fullNameET.getText().toString();
-
+                Boolean emailValidation = (patternMatches(email, regexPattern));
                 Users user  = new Users(password,email,fullName);
 
 
@@ -63,17 +74,23 @@ public class RegisterActivity extends AppCompatActivity {
                     } else {
                         Boolean checkUserExist = myDbHandler.checkRegistrationExist(user);
                         if (checkUserExist == false) {
-                            Boolean insert = myDbHandler.Registration(user);
-                            if (insert == true) {
-                                Toast.makeText(RegisterActivity.this, "Успешно се регистрирахте!", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                            if (emailValidation == false) {
+                                Toast.makeText(RegisterActivity.this, "Невалиден имейл!\nМоля опитайте пак!", Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(RegisterActivity.this, "Грешка по време на регистрация!", Toast.LENGTH_SHORT).show();
+                                Boolean insert = myDbHandler.Registration(user);
+                                if (insert == true) {
+                                    Toast.makeText(RegisterActivity.this, "Успешно се регистрирахте!", Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                                } else {
+                                    Toast.makeText(RegisterActivity.this, "Грешка по време на регистрация!", Toast.LENGTH_SHORT).show();
+                                }
+
+                            }
+                        }
+                            else{
+                                Toast.makeText(RegisterActivity.this, "Вече има регистрация с този имейл!", Toast.LENGTH_SHORT).show();
                             }
 
-                        } else {
-                            Toast.makeText(RegisterActivity.this, "Вече има регистрация с този имейл!", Toast.LENGTH_SHORT).show();
-                        }
                     }
                 }
 

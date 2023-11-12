@@ -17,6 +17,10 @@
             android:icon="@drawable/ic_baseline_favorite_24"
             android:title="Любими" />
         <item
+            android:id="@+id/nav_location"
+            android:icon="@android:drawable/ic_dialog_map"
+            android:title="Местоположение" />
+        <item
             android:id="@+id/nav_edit_user"
             android:icon="@drawable/ic_baseline_manage_accounts_24"
             android:title="Редактиране на профил" />
