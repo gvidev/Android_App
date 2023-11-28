@@ -19,6 +19,8 @@ Then saving favourite products for each user in the database.
 
 <img src="https://user-images.githubusercontent.com/104200628/206855657-44c309a0-fb8e-4967-ab32-935248aced7d.jpg" width="200" height="400" />
 
+<img src="https://github.com/gvidev/Android_App/assets/104200628/688f27f3-b4ef-4656-93da-77499b6fe913.jpg" width="200" height="400" />
+
 <img src="https://user-images.githubusercontent.com/104200628/206856439-61e54f69-6472-4b96-9ceb-be022807100b.jpg" width="200" height="400" />
 
 <img src="https://user-images.githubusercontent.com/104200628/206856233-cd628a23-fee9-45a2-a94a-dba89e97dd83.jpg" width="200" height="400" />
